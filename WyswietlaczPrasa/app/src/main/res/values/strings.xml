@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">WyswietlaczPrasa</string>
+    <string name="app_data">dane</string>
+    <string name="title_activity_connect">Ustawienia połączenia</string>
+    <string name="action_save">Zapisz</string>
+    <string name="action_settings">Ustawienia</string>
+    <string name="action_connection">Ustawienia połączenia</string>
+    <string name="action_connect">Połącz</string>
+    <string name="action_disconnect">Rozłącz</string>
+    <string name="action_reset_counter">Resetuj licznik</string>
+    <string name="text_IPaddress">Adres IP</string>
+    <string name="text_IPaddressError">Podaj poprawny adres IP.</string>
+    <string name="text_DataHint">Podaj liczbę z zakresu od 0 do 1023.</string>
+    <string name="text_DataError">Niepoprawna liczba.</string>
+    <string name="text_ConfigSaveCorrect">Konfiguracja została zapisana</string>
+    <string name="text_ConfigReceived">Odczytano konfigurację serwera</string>
+    <string name="text_ConfigSent">Wysłano konfigurację do serwera</string>
+    <string name="text_ClosedConnection">Zakończono połączenie</string>
+    <string name="text_port">Numer portu</string>
+    <string name="text_left">Lewa</string>
+    <string name="text_right">Prawa</string>
+    <string name="text_middle">Środek</string>
+    <string name="text_sensor_klapa">Klapa</string>
+    <string name="text_sensor_tyl">Taśma tył</string>
+    <string name="text_sensor_przod">Taśma przód</string>
+    <string name="text_liczba_bel">Liczba bel</string>
+    <string name="text_ust_rozmiar_belki">Rozmiar belki</string>
+    <string name="text_ust_czas_ruchu_tasma">Czas w sekundach potrzebny do przesunięcia taśmy</string>
+    <string name="text_ust_czas_siatki_sznurka">Czas w sekundach potrzebny do złapania siatki/sznurka przez prasę</string>
+    <string name="text_ust_licznik_siatka_sznurek">Liczba obrotów siatki/sznurka potrzebny do złapania go przez prasę</string>
+    <string name="text_ust_czas_obrotu_tasmy">Czas w sekundach potrzebny do zakończenia podawania siatki/sznurka przez prasę</string>
+    <string name="text_ust_czujnik_zblizeniowy">Minimalna wartość czujnika zbliżeniowego uznawana za impuls</string>
+    <string name="text_ust_czujnik_srodek">Wartość czujnika środkowego przy której klapa jest zamknięta, a pasy są napięte</string>
+    <string name="title_activity_settings">Ustawienia czujników</string>
+</resources>
