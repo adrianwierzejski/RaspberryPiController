@@ -96,6 +96,7 @@ public class MainActivity extends MyActivity {
         final TextView tvLiczbaBel =  findViewById(R.id.textView_liczba_bel);
         final TextView tvlog = findViewById(R.id.textView_log);
         final View v = this.findViewById(android.R.id.content);
+        final Button button_polacz = (Button) findViewById(R.id.button_polacz);
         Button bReset = findViewById(R.id.button_reset);
         bReset.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +114,6 @@ public class MainActivity extends MyActivity {
                     @Override
                     public void run() {
                         tvlog.setText(response);
-                        String log = "";
                         switch (command) {
                             case Client.sGetData:
                                 int czujnikZblizeniowy = config[4];
@@ -131,7 +131,7 @@ public class MainActivity extends MyActivity {
                                 else cbPrzod.setChecked(false);
                                 tvLiczbaBel.setText((data[8]-reset)+"");
                                 break;
-                            case Client.sReceiveConfig:
+                            case Client.sGetConfig:
                                 intentSettingsActivity.putExtra(DataConfigReceived, data);
                                 if (config == null)
                                     config = data;
@@ -141,44 +141,52 @@ public class MainActivity extends MyActivity {
                                                 .replaceAll(","," ")).commit();
                                 Snackbar.make(v, getString(R.string.text_ConfigReceived), Snackbar.LENGTH_LONG);
                                 break;
-                            case Client.sSendConfig:
+                            case Client.sSaveConfig:
                                 Snackbar.make(v, getString(R.string.text_ConfigSent), Snackbar.LENGTH_LONG);
                                 break;
                             case Client.sClosedConnection:
                                 Snackbar.make(v, getString(R.string.text_ClosedConnection), Snackbar.LENGTH_LONG);
+                                button_polacz.setText(getString(R.string.action_connect));
                                 pbLewa.setProgress(0);
-                                tvLewa.setText(0);
+                                tvLewa.setText(0+"");
                                 pbPrawa.setProgress(0);
-                                tvPrawa.setText(0);
+                                tvPrawa.setText(0+"");
                                 pbSrodek.setProgress(0);
-                                tvSrodek.setText(0);
+                                tvSrodek.setText(0+"");
                                 cbKlapa.setChecked(false);
                                 cbTyl.setChecked(false);
                                 cbPrzod.setChecked(false);
                                 break;
                             default:
-                                tvlog.setText(response);
                                 break;
                         }
                     }
                 });
             }
         });
-        final Button button_polacz = (Button) findViewById(R.id.button_polacz);
         button_polacz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Łączenie z serwerem", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                Log.v("Main", "Łączenie z serwerem " + ipAddress + ':' + port);
-                if (client.getState() == Thread.State.TERMINATED) {
+                int a=0;
+                if (client.getState() == Thread.State.NEW) {
                     client.setClient(ipAddress, port);
                     client.start();
                     button_polacz.setText(R.string.action_disconnect);
-                } else if (client.getState() == Thread.State.RUNNABLE || client.getState() == Thread.State.TIMED_WAITING) {
+                    Snackbar.make(view,getString(R.string.text_Connecting)+" "+ipAddress+":"+port, Snackbar.LENGTH_LONG).show();
+                    a=1;
+                } else if( client.isWaiting() && client.getCommand()==Client.sClosedConnection){
+                    client.setClient(ipAddress, port);
+                    button_polacz.setText(R.string.action_disconnect);
+                    Snackbar.make(view,getString(R.string.text_Connecting)+" "+ipAddress+":"+port, Snackbar.LENGTH_LONG).show();
+                    a=2;
+                } else if (client.getState() == Thread.State.RUNNABLE || client.getState() == Thread.State.TIMED_WAITING ) {
                     client.closeConnection();
                     button_polacz.setText(R.string.action_connect);
+                    Snackbar.make(view,getString(R.string.text_ClosingConnection),Snackbar.LENGTH_LONG);
+                    a=3;
                 }
+                Log.v("Main", "Łączenie z serwerem " + ipAddress + ':' + port+"   "+a);
+
             }
         });
     }

@@ -12,43 +12,46 @@ import java.net.UnknownHostException;
 public class Client extends Thread {
 
 	public static final int sGetData = 0;
-	public static final int sReceiveConfig = 1;
-	public static final int sSendConfig = 2;
+	public static final int sGetConfig = 1;
+	public static final int sSaveConfig = 2;
 	public static final int sEndConnection = 3;
 	public static final int sClosedConnection = 4;
+	public static final int sUnknownCommand = 5;
 	private int command;
 	private Socket socket;
 	private String hostAddress;
 	private int hostPort;
 	private Object lock;
-	private boolean zatrzymany;
+	private boolean pause;
 	private String config;
 	private ClientLoopListener mListener;
 
 	Client(String address, int port){
-		socket = new Socket();
-		command=sReceiveConfig;
+		command=sGetConfig;
 		hostAddress = address;
 		this.hostPort = port;
 		this.socket = null;
 		this.lock = new Object();
-		this.zatrzymany = false;
+		this.pause = false;
 		this.mListener = null;
 	}
 
     Client(){
 		socket = new Socket();
-		this.command=sReceiveConfig;
+		this.command=sGetConfig;
 		this.hostAddress = null;
 		this.hostPort = 0;
 		this.socket = null;
 		this.lock = new Object();
-		this.zatrzymany = false;
 		this.mListener = null;
 	}
 	public void setClient(String address, int port){
-		this.hostAddress = address;
-		this.hostPort = port;
+    	synchronized (lock) {
+    		pause=false;
+			this.command = sGetConfig;
+			this.hostAddress = address;
+			this.hostPort = port;
+		}
 	}
 	public int getCommand(){
 		int out;
@@ -76,68 +79,99 @@ public class Client extends Thread {
 		synchronized (lock){
 			this.config = result;
 		}
-		setCommand(sSendConfig);
+		setCommand(sSaveConfig);
 
+	}
+	public boolean isWaiting(){
+		synchronized (lock){
+			return pause;
+		}
+	}
+	private void waitThread(){
+		boolean result;
+		synchronized (lock){
+			pause = true;
+			result = pause;
+		}
+		while(!isInterrupted()&&result) {
+			try {
+				sleep(5000);
+				synchronized (lock){
+					result=pause;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	public void closeConnection(){
 			setCommand(sEndConnection);
 	}
 	public void run()
 	{
-		while (!isInterrupted()&&getCommand()!=sClosedConnection) {
+		while (!isInterrupted()) {
 			String response = "";
 			try {
+				socket =new Socket();
 				socket.connect(new InetSocketAddress(hostAddress, hostPort), 60000);
-				while (getCommand()!=sClosedConnection) {
+				while (!isInterrupted()&&getCommand()!=sClosedConnection) {
 					int command = getCommand();
 					DataInputStream inputStream = new DataInputStream(
 							socket.getInputStream());
 					DataOutputStream outputStream = new DataOutputStream(
 							socket.getOutputStream());
-					if(command == sSendConfig)
+					if(command == sSaveConfig)
 						synchronized (lock){
 						outputStream.writeBytes(""+command+" "+config+'\0');}
 					else
 						outputStream.writeBytes(""+command + '\0');
 					response = inputStream.readLine();
-					int receivedCommand = Integer.parseInt(response.substring(0,0));
-					String responsetab[]=response.split(" ");
-					int tab[] = new int[responsetab.length-1];
-					for (int i = 1; i < responsetab.length; i++) {
-						try {
-							tab[i-1] = Integer.parseInt(responsetab[i]);
-						} catch (Exception ex) {
-							Log.v(currentThread().getName(),"Błąd zamiany string na int wartość:"+responsetab[i]);
-							tab[i] = 0;
+					int receivedCommand = sUnknownCommand;
+					int tab[]=null;
+					try {
+						receivedCommand=Integer.parseInt(response.substring(0, 0));
+						String responsetab[]=response.split(" ");
+						tab = new int[responsetab.length-1];
+						for (int i = 1; i < responsetab.length; i++) {
+							try {
+								tab[i-1] = Integer.parseInt(responsetab[i]);
+							} catch (Exception ex) {
+								Log.v(currentThread().getName(),"Błąd zamiany string na int wartość:"+responsetab[i]);
+								tab[i] = 0;
+							}
 						}
+					}catch(NumberFormatException e){
+						e.printStackTrace();
+						receivedCommand=sUnknownCommand;
 					}
 					if(receivedCommand!=command)
 						Log.v(currentThread().getName(),"Serwer błędnie odpowiedział na żądanie: "+command+" odpowiedz sewrwera: "+receivedCommand+" pakiet: "+response);
-					if(receivedCommand==sEndConnection)
+					if(command==sEndConnection)
 						setCommand(sClosedConnection);
-					else setCommand(sGetData);
+					else if(getCommand()==command)
+						setCommand(sGetData);
 					if (mListener != null)
 						mListener.onSomeEvent(receivedCommand,tab,response);
 				}
-				socket.close();
-			} catch (NumberFormatException e){
+			} catch(SocketTimeoutException e) {
 				e.printStackTrace();
-			} catch(SocketTimeoutException e){
-				e.printStackTrace();
-				setCommand(sClosedConnection);
 			} catch(UnknownHostException e){
 				e.printStackTrace();
 			} catch(IOException e){
 				e.printStackTrace();
 			} catch(Exception e){
 				e.printStackTrace();
-			} finally{
+			} finally {
+				setCommand(sClosedConnection);
+				if (mListener != null)
+					mListener.onSomeEvent(sClosedConnection, null, response);
 				try {
 					socket.close();
-				} catch (IOException e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
+			waitThread();
 		}
 	}
 }

@@ -16,6 +16,8 @@
     <string name="text_ConfigReceived">Odczytano konfigurację serwera</string>
     <string name="text_ConfigSent">Wysłano konfigurację do serwera</string>
     <string name="text_ClosedConnection">Zakończono połączenie</string>
+    <string name="text_ClosingConnection">Zamykanie połączenia</string>
+    <string name="text_Connecting">Lączenie z serwerem</string>
     <string name="text_port">Numer portu</string>
     <string name="text_left">Lewa</string>
     <string name="text_right">Prawa</string>

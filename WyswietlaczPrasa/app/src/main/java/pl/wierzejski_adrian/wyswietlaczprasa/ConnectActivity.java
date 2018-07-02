@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 public class ConnectActivity extends MyActivity {
 
-    private SharedPreferences prefs;
     private Intent resultIntent;
     private EditText ETip;
     private EditText ETport;
@@ -25,6 +24,7 @@ public class ConnectActivity extends MyActivity {
         setContentView(R.layout.activity_connect);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        resultIntent = new Intent();
         Intent intent = getIntent();
         ETip = (EditText) findViewById(R.id.editText_IP);
         ETip.setText(intent.hasExtra(DataIp) ? intent.getStringExtra(DataIp) : DefaultIpAddress);
@@ -39,6 +39,7 @@ public class ConnectActivity extends MyActivity {
                     int Iport = Integer.parseInt(ETport.getText().toString());
                     resultIntent.putExtra(getString(R.string.text_port),Iport);
                     success = true;
+                    Snackbar.make(view,getString(R.string.text_ConfigSaveCorrect),Toast.LENGTH_LONG).show();
                 }else Snackbar.make(view,getString(R.string.text_IPaddressError),Toast.LENGTH_LONG).show();
             }
         });
