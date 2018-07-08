@@ -11,12 +11,12 @@ import java.net.UnknownHostException;
 
 public class Client extends Thread {
 
-	public static final int sGetData = 0;
-	public static final int sGetConfig = 1;
-	public static final int sSaveConfig = 2;
-	public static final int sEndConnection = 3;
-	public static final int sClosedConnection = 4;
-	public static final int sUnknownCommand = 5;
+	public static final int sGetData = 1;
+	public static final int sGetConfig = 2;
+	public static final int sSaveConfig = 3;
+	public static final int sEndConnection = 4;
+	public static final int sClosedConnection = 5;
+	public static final int sUnknownCommand = 6;
 	private int command;
 	private Socket socket;
 	private String hostAddress;

@@ -10,7 +10,7 @@
     <string name="action_reset_counter">Resetuj licznik</string>
     <string name="text_IPaddress">Adres IP</string>
     <string name="text_IPaddressError">Podaj poprawny adres IP.</string>
-    <string name="text_DataHint">Podaj liczbę z zakresu od 0 do 1023.</string>
+    <string name="text_DataHint">Podaj liczbę z zakresu od 1 do 1023.</string>
     <string name="text_DataError">Niepoprawna liczba.</string>
     <string name="text_ConfigSaveCorrect">Konfiguracja została zapisana</string>
     <string name="text_ConfigReceived">Odczytano konfigurację serwera</string>

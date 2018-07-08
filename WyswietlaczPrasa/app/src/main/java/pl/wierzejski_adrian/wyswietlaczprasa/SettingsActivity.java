@@ -56,7 +56,7 @@ public class SettingsActivity extends MyActivity {
                 public void afterTextChanged(Editable editable) {
                     try{
                         int value = Integer.parseInt(editText.getText().toString());
-                        if(value>=0&&value<=1023)
+                        if(value>=1&&value<=1023)
                             editText.setError(null);
                     }catch(NumberFormatException ex){
                         editText.setError(getString(R.string.text_DataError));
