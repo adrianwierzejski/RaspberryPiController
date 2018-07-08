@@ -1,0 +1,145 @@
+# depslib dependency file v1.0
+1525881029 source:/home/adrian/Pulpit/project/PrasaSerwer/main.cpp
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+	"socket.h"
+	<pthread.h>
+	<thread>
+	<mutex>
+	"wiringPi.h"
+	"mcp3004.h"
+	<wx/timer.h>
+	<fstream>
+	<time.h>
+	<stdlib.h>
+
+1523303419 /home/adrian/Pulpit/project/PrasaSerwer/socket.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<unistd.h>
+	<sys/socket.h>
+	<netinet/in.h>
+	<arpa/inet.h>
+	<iostream>
+
+1525895284 source:/home/adrian/Pulpit/project/PrasaSerwer/socket.cpp
+	<stdio.h>
+	<stdlib.h>
+	<string>
+	<unistd.h>
+	<sys/socket.h>
+	<netinet/in.h>
+	<arpa/inet.h>
+	<pthread.h>
+	<iostream>
+
+1525864976 /home/adrian/Pulpit/project/PrasaSerwer/wiringPi.h
+
+1525864546 /home/adrian/Pulpit/project/PrasaSerwer/mcp3008Spi.h
+	<unistd.h>
+	<stdint.h>
+	<fcntl.h>
+	<sys/ioctl.h>
+	<linux/spi/spidev.h>
+	<stdio.h>
+	<errno.h>
+	<stdlib.h>
+	<string>
+	<iostream>
+
+1525865366 source:/home/adrian/Pulpit/project/PrasaSerwer/mcp3008Spi.cpp
+	"mcp3008Spi.h"
+
+1525865638 /home/adrian/Pulpit/project/PrasaSerwer/wiringPi/wiringPi.h
+
+1525865638 /home/adrian/Pulpit/project/PrasaSerwer/wiringPi/wiringPi/wiringPi.h
+
+1525865638 source:/home/adrian/Pulpit/project/PrasaSerwer/wiringPi/wiringPi/wiringPi.c
+	<stdio.h>
+	<stdarg.h>
+	<stdint.h>
+	<stdlib.h>
+	<ctype.h>
+	<poll.h>
+	<unistd.h>
+	<errno.h>
+	<string.h>
+	<time.h>
+	<fcntl.h>
+	<pthread.h>
+	<sys/time.h>
+	<sys/mman.h>
+	<sys/stat.h>
+	<sys/wait.h>
+	<sys/ioctl.h>
+	<asm/ioctl.h>
+	"softPwm.h"
+	"softTone.h"
+	"wiringPi.h"
+	"../version.h"
+
+1525865638 /home/adrian/Pulpit/project/PrasaSerwer/wiringPi/wiringPi/softPwm.h
+
+1525865638 /home/adrian/Pulpit/project/PrasaSerwer/wiringPi/wiringPi/softTone.h
+
+1525865638 /home/adrian/Pulpit/project/PrasaSerwer/wiringPi/version.h
+
+1525865638 /home/adrian/Pulpit/project/PrasaSerwer/wiringPi/wiringPi/mcp3004.h
+
+1525865638 /home/adrian/Pulpit/project/PrasaSerwer/wiringPi/wiringPi/wiringPiSPI.h
+
+1488590223 /home/adrian/Pulpit/project/PrasaSerwer/includeWiringPi/wiringPi.h
+
+1488590223 /home/adrian/Pulpit/project/PrasaSerwer/includeWiringPi/mcp3004.h
+
+1531002238 source:/home/pi/Desktop/PrasaSerwer/src/config.cpp
+	"config.h"
+
+1531002280 /home/pi/Desktop/PrasaSerwer/include/config.h
+	<iostream>
+
+1531001848 source:/home/pi/Desktop/PrasaSerwer/src/main.cpp
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+	<fstream>
+	<wiringPi.h>
+	<mcp3004.h>
+	"config.h"
+	"server.h"
+
+1530992300 /home/pi/Desktop/PrasaSerwer/include/socket.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<unistd.h>
+	<sys/socket.h>
+	<netinet/in.h>
+	<arpa/inet.h>
+	<iostream>
+
+1531001734 /home/pi/Desktop/PrasaSerwer/include/server.h
+	<thread>
+	<mutex>
+	<stdlib.h>
+	"config.h"
+	"socket.h"
+
+1530992371 source:/home/pi/Desktop/PrasaSerwer/src/server.cpp
+	"server.h"
+	"socket.h"
+	"config.h"
+
+1530991833 source:/home/pi/Desktop/PrasaSerwer/src/socket.cpp
+	<stdio.h>
+	<stdlib.h>
+	<string>
+	<unistd.h>
+	<sys/socket.h>
+	<netinet/in.h>
+	<arpa/inet.h>
+	<pthread.h>
+	<iostream>
+
